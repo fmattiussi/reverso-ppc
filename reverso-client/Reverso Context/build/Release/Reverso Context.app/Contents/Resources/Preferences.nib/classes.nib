@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>closeDrawer</key>
+				<string>id</string>
+				<key>open</key>
+				<string>id</string>
+				<key>updateInformations</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>PreferencesController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>accountPassword</key>
+				<string>NSTextField</string>
+				<key>accountUsername</key>
+				<string>NSTextField</string>
+				<key>addressField</key>
+				<string>NSTextField</string>
+				<key>portField</key>
+				<string>NSTextField</string>
+				<key>serverPassword</key>
+				<string>NSTextField</string>
+				<key>serverUsername</key>
+				<string>NSTextField</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>

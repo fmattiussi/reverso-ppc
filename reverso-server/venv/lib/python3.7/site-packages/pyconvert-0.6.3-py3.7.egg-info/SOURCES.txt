@@ -1,0 +1,17 @@
+setup.cfg
+setup.py
+demos/__init__.py
+demos/json_2_obj_v1.py
+demos/json_2_obj_v2.py
+demos/json_2_obj_v3.py
+demos/object_2_json.py
+demos/object_2_xml.py
+demos/xml_2_object_v1.py
+demos/xml_2_object_v2.py
+demos/xml_2_object_v3.py
+pyconvert/__init__.py
+pyconvert/pyconv.py
+pyconvert.egg-info/PKG-INFO
+pyconvert.egg-info/SOURCES.txt
+pyconvert.egg-info/dependency_links.txt
+pyconvert.egg-info/top_level.txt

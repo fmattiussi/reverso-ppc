@@ -1,0 +1,12 @@
+README.md
+setup.cfg
+setup.py
+reverso_context_api/__init__.py
+reverso_context_api/client.py
+reverso_context_api/misc.py
+reverso_context_api/session.py
+reverso_context_api.egg-info/PKG-INFO
+reverso_context_api.egg-info/SOURCES.txt
+reverso_context_api.egg-info/dependency_links.txt
+reverso_context_api.egg-info/requires.txt
+reverso_context_api.egg-info/top_level.txt

@@ -1,0 +1,4 @@
+/Users/francescomattiussi/Reverso Context/TaleViewDataObject.m: In function '-[TableViewDataObject initWithExamples:target:]':
+/Users/francescomattiussi/Reverso Context/TaleViewDataObject.m:25: error: 't_example' undeclared (first use in this function)
+/Users/francescomattiussi/Reverso Context/TaleViewDataObject.m:25: error: (Each undeclared identifier is reported only once
+/Users/francescomattiussi/Reverso Context/TaleViewDataObject.m:25: error: for each function it appears in.)

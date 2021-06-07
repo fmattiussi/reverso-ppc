@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: reverso-context-api
+Version: 0.5
+Summary: Simple Python wrapper for Reverso Context API
+Home-page: https://github.com/flagist0/reverso_context_api
+Author: Alexander Presnyakov
+Author-email: flagist0@gmail.com
+License: MIT License
+Download-URL: https://github.com/flagist0/reverso_context_api/archive/0.5.zip
+Description: UNKNOWN
+Keywords: reverso context,api
+Platform: UNKNOWN
