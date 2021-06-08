@@ -6,7 +6,7 @@ echo "venv activated"
 export FLASK_APP=$app
 echo "path exported"
 
-cd reverso
+cd ./reverso
 
 echo "launching flask at $1"
 
