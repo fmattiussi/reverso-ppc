@@ -36,6 +36,8 @@
 	// Drawer Things
 	IBOutlet NSDrawer *drawer;
 	IBOutlet NSView *drawerView;
+	IBOutlet NSTextView *sourceText;
+	IBOutlet NSTextView *targetText;
 	
 	// TabView
 	IBOutlet NSTabView *tabView;
@@ -54,12 +56,13 @@
 // TabView
 @property (assign) IBOutlet NSTabView *tabView;
 @property (assign) NSString *service;
-- (IBAction)tabChanged:(id)sender;
 
 // Drawer
 
 @property (assign) IBOutlet NSDrawer *drawer;
 @property (assign) IBOutlet NSView *drawerView;
+@property (assign) IBOutlet NSTextView *sourceText;
+@property (assign) IBOutlet NSTextView *targetText;
 - (IBAction)toggleDrawer:(id)sender;
 
 // Interface Builder's properties
@@ -73,6 +76,7 @@
 - (IBAction)search:(id)pId;
 - (IBAction)sourceLanguageSelected:(id)sender;
 - (IBAction)targetLanguageSelected:(id)sender;
+- (IBAction)rowSelected:(id)sender;
 
 @property (nonatomic, retain) NSMutableData* responseData;
 @property (assign) NSInteger* sourceLanguageId;

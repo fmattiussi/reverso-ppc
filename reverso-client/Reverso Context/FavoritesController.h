@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface FavoritesController : NSDrawer {
+@interface FavoritesController : NSWindowController {
 
 }
 

@@ -21,7 +21,7 @@
 
 @synthesize searchField;
 
-@synthesize drawer, drawerView, tabView, service, spinner;
+@synthesize drawer, drawerView, tabView, service, spinner, targetText, sourceText;
 
 @synthesize preferences;
 
@@ -77,10 +77,11 @@
 	[[self drawer] close:self];
 	[[self drawer] setTrailingOffset:10.];
 	[[self drawer] setLeadingOffset:10.];
-	[[self drawer] setContentSize:NSMakeSize(327., 379.)];
+	[[self drawer] setContentSize:NSMakeSize(300., 368.)];
 	
 	[[self resultsTableView] setDelegate:self];
 	[[self resultsTableView] setDataSource:self];
+	[[self resultsTableView] setTarget:self];
 	
 	sourceLanguageId = [self locale:[sourceLanguage indexOfSelectedItem]];
 	targetLanguageId = [self locale:[targetLanguage indexOfSelectedItem]];
@@ -95,14 +96,34 @@
 // Drawer actions
 
 - (IBAction)toggleDrawer:(id)sender {
-	//if ([drawer state] == NSDrawerClosedState) {
-	//	[drawer open:sender];
-	//}
+	if ([drawer state] == NSDrawerClosedState) {
+		[drawer open:sender];
+	} else {
+		[drawer close];
+	}
 	NSLog(@"eee");
 	
 }
 
 // TableView's delegates and functions
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+
+	if ([drawer state] == NSDrawerClosedState) {
+		[drawer open:self];
+	}
+	
+	NSInteger index = [resultsTableView selectedRow];
+	
+	if (index != -1) {
+		NSRange sourceRange;
+		sourceRange = NSMakeRange(0, [[sourceText string] length]);
+		[sourceText replaceCharactersInRange:sourceRange withString:[sourceExampleArray objectAtIndex:index]];
+	
+		NSRange targetRange;
+		targetRange = NSMakeRange(0, [[targetText string] length]);
+		[targetText replaceCharactersInRange:targetRange withString:[targetExampleArray objectAtIndex:index]];
+	}
+}
 
 - (void)mergeData:(NSMutableArray *)outputData firstArray:(NSMutableArray *)arrayOne secondArray:(NSMutableArray *)arrayTwo {
 	if ([arrayOne count] == [arrayTwo count]) {
