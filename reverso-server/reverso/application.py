@@ -3,6 +3,53 @@ from flask import request
 from reverso_context_api import Client
 import itertools
 import pyconvert.pyconv
+from werkzeug.exceptions import HTTPException
+
+# favorites object
+
+class Favorite(object):
+	source_lang = ""
+	source_text = ""
+	source_context = ""
+	
+	target_lang = ""
+	target_text = ""
+	target_context = ""
+	
+	def __init__(self, source_lang, source_text, source_context, target_lang, target_text, target_context):
+		self.source_lang = source_lang
+		self.source_text = source_text
+		self.source_context = source_context
+	
+		self.target_lang = target_lang
+		self.target_text = target_text
+		self.target_context = target_context
+
+class FavoritesResponse(object):
+	favorites = [Favorite]
+	
+	def __init__(self, favorites):
+		self.favorites = favorites
+
+class Credentials(object):
+	email = ""
+	password = ""
+	
+	def __init__(self, email, password):
+		self.email = email
+		self.password = password
+
+# error object
+
+class EHTTPError(object):
+	code = ""
+	name = ""
+	description = ""
+	
+	def __init__(self, code, name, description):
+		self.code = code
+		self.name = name
+		self.description = description
 
 # context objects
 
@@ -90,30 +137,48 @@ def getSearchSuggestions(text, inputlang, outputlang, number):
     json_translations = pyconvert.pyconv.convert2XML(response)
     print(json_translations.toprettyxml())
     return json_translations.toprettyxml()
+	
+def getFavorites(inputlang, outputlang, credentials, number):
+	client = Client(inputlang, outputlang, credentials=(credentials.email, credentials.password))
+	
+	favorites = []
+	for favorite in itertools.islice(client.get_favorites(), number):
+		favorites.append(Favorite(favorite[0], favorite[1], favorite[2], favorite[3], favorite[4], favorite[5]))
+
+	response = FavoritesResponse(favorites)
+	json_favorites = pyconvert.pyconv.convert2XML(response)
+	print(json_favorites.toprettyxml())
+	return json_favorites.toprettyxml()
 
 @app.route("/")
 def homepage():
 
     # collecting parameters
 
-    service = request.args.get('service')
-    text = request.args.get('text')
-    inputlang = request.args.get('inputlang')
-    outputlang = request.args.get('outputlang')
-    number = request.args.get('number', default = 10, type=int)
+	service = request.args.get('service')
+	text = request.args.get('text')
+	inputlang = request.args.get('inputlang')
+	outputlang = request.args.get('outputlang')
+	number = request.args.get('number', default = 10, type=int)
+	email = request.args.get('email')
+	password = request.args.get('password')
+	
+	credentials = Credentials(email, password)
+	
+	if service == "context":
+		return getContext(text, inputlang, outputlang, number)
+	elif service  == "translation":
+		return getTranslation(text, inputlang, outputlang, number)
+	elif service == "suggestions":
+		return getSearchSuggestions(text, inputlang, outputlang, number)
+	elif service == "favorites":
+		return getFavorites(inputlang, outputlang, credentials, number)
+	else:
+		return "wrong or unspecified service"
 
-    if text == "":
-        return "the text to translate hasn't been specified"
-    elif inputlang == "":
-        return "the source language hasn't been specified"
-    elif outputlang == "":
-        return "the target language hasn't been specified"
-
-    if service == "context":
-        return getContext(text, inputlang, outputlang, number)
-    elif service  == "translation":
-        return getTranslation(text, inputlang, outputlang, number)
-    elif service == "suggestions":
-        return getSearchSuggestions(text, inputlang, outputlang, number)
-    else:
-        return "wrong or unspecified service"
+@app.errorhandler(HTTPException)
+def handle_exception(e):
+    response = e.get_response()
+    http_error = HTTPError(e.code, e.name, e.description)
+    error_xml = pyconvert.pyconv.convert2XML(http_error)
+    return error_xml.tooprettyxml()
