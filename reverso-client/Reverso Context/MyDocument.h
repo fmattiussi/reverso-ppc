@@ -9,6 +9,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "TableViewDataObject.h"
+#import "TranslationDataObject.h"
 #import "PreferencesController.h"
 
 @interface MyDocument : NSDocument
@@ -23,15 +24,18 @@
 	IBOutlet NSPopUpButton *sourceLanguage;
 	IBOutlet NSPopUpButton *targetLanguage;
 	IBOutlet NSTableView *resultsTableView;
+	IBOutlet NSTableView *translationsTableView;
 	IBOutlet NSProgressIndicator *spinner;
 	
 	// Parsing Things
-	NSString *currentElement, *source_example, *target_example;
+	NSString *currentElement, *source_example, *target_example, *translation;
 	NSMutableString *elementValue;
 	
 	// Results Arrays
 	NSMutableArray *sourceExampleArray, *targetExampleArray;
 	NSMutableArray *tableViewData;
+	NSMutableArray *translationsTableViewData;
+	NSMutableArray *translations;
 	
 	// Drawer Things
 	IBOutlet NSDrawer *drawer;
@@ -40,8 +44,8 @@
 	IBOutlet NSTextView *targetText;
 	
 	// TabView
-	IBOutlet NSTabView *tabView;
-	NSString *service;
+	IBOutlet NSTabView *servicesTabView;
+	NSInteger service;
 	
 	// Windows
 	IBOutlet NSWindow *preferences;
@@ -54,8 +58,8 @@
 @property (assign) IBOutlet NSWindow *preferences;
 
 // TabView
-@property (assign) IBOutlet NSTabView *tabView;
-@property (assign) NSString *service;
+@property (assign) IBOutlet NSTabView *servicesTabView;
+@property (assign) NSInteger service;
 
 // Drawer
 
@@ -64,12 +68,14 @@
 @property (assign) IBOutlet NSTextView *sourceText;
 @property (assign) IBOutlet NSTextView *targetText;
 - (IBAction)toggleDrawer:(id)sender;
+- (IBAction)saveToPasteboard:(id)sender;
 
 // Interface Builder's properties
 @property (assign) IBOutlet NSTextField *searchField;
 @property (assign) IBOutlet NSPopUpButton *sourceLanguage;
 @property (assign) IBOutlet NSPopUpButton *targetLanguage;
 @property (assign) IBOutlet NSTableView *resultsTableView;
+@property (assign) IBOutlet NSTableView *translationsTableView;
 @property (assign) IBOutlet NSProgressIndicator *spinner;
 
 // Interface Builder's actions
@@ -85,11 +91,15 @@
 @property (assign) NSString* currentElement;
 @property (assign) NSString* source_example;
 @property (assign) NSString* target_example;
+@property (assign) NSString* translation;
 @property (assign) NSMutableString* elementValue;
 
 @property (assign) NSMutableArray* sourceExampleArray;
 @property (assign) NSMutableArray* targetExampleArray;
 @property (assign) NSMutableArray* tableViewData;
+
+@property (assign) NSMutableArray *translationsTableViewData;
+@property (assign) NSMutableArray *translations;
 
 - (NSString *)locale:(int)index;
 - (void)find;

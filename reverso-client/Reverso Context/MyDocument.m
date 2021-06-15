@@ -13,17 +13,17 @@
 
 @synthesize responseData, sourceLanguage, targetLanguage, sourceLanguageId, targetLanguageId;
 
-@synthesize currentElement, source_example, target_example, elementValue;
+@synthesize currentElement, source_example, target_example, elementValue, translation;
 
 @synthesize sourceExampleArray, targetExampleArray;
 
-@synthesize resultsTableView, tableViewData;
+@synthesize resultsTableView, tableViewData, translationsTableView, translationsTableViewData, translations;
 
 @synthesize searchField;
 
-@synthesize drawer, drawerView, tabView, service, spinner, targetText, sourceText;
+@synthesize drawer, drawerView, service, spinner, targetText, sourceText;
 
-@synthesize preferences;
+@synthesize preferences, servicesTabView;
 
 - (id)init
 {
@@ -71,7 +71,7 @@
     [super windowControllerDidLoadNib:aController];
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
 	
-	service = @"context";
+	service = 1;
 	
 	[[self drawer] setDelegate:self];
 	[[self drawer] close:self];
@@ -82,6 +82,12 @@
 	[[self resultsTableView] setDelegate:self];
 	[[self resultsTableView] setDataSource:self];
 	[[self resultsTableView] setTarget:self];
+	
+	[[self translationsTableView] setDelegate:self];
+	[[self translationsTableView] setDataSource:self];
+	[[self translationsTableView] setTarget:self];
+	
+	[[self servicesTabView] setDelegate:self];
 	
 	sourceLanguageId = [self locale:[sourceLanguage indexOfSelectedItem]];
 	targetLanguageId = [self locale:[targetLanguage indexOfSelectedItem]];
@@ -112,17 +118,32 @@
 		[drawer open:self];
 	}
 	
-	NSInteger index = [resultsTableView selectedRow];
+	if (service == 1) {
+		NSInteger index = [resultsTableView selectedRow];
 	
-	if (index != -1) {
-		NSRange sourceRange;
-		sourceRange = NSMakeRange(0, [[sourceText string] length]);
-		[sourceText replaceCharactersInRange:sourceRange withString:[sourceExampleArray objectAtIndex:index]];
+		if (index != -1) {
+			NSRange sourceRange;
+			sourceRange = NSMakeRange(0, [[sourceText string] length]);
+			[sourceText replaceCharactersInRange:sourceRange withString:[sourceExampleArray objectAtIndex:index]];
 	
-		NSRange targetRange;
-		targetRange = NSMakeRange(0, [[targetText string] length]);
-		[targetText replaceCharactersInRange:targetRange withString:[targetExampleArray objectAtIndex:index]];
+			NSRange targetRange;
+			targetRange = NSMakeRange(0, [[targetText string] length]);
+			[targetText replaceCharactersInRange:targetRange withString:[targetExampleArray objectAtIndex:index]];
+		}
+	} else if (service == 2) {
+		NSInteger index = [translationsTableView selectedRow];
+	
+		if (index != -1) {
+			NSRange sourceRange;
+			sourceRange = NSMakeRange(0, [[sourceText string] length]);
+			[sourceText replaceCharactersInRange:sourceRange withString:[searchField stringValue]];
+	
+			NSRange targetRange;
+			targetRange = NSMakeRange(0, [[targetText string] length]);
+			[targetText replaceCharactersInRange:targetRange withString:[translations objectAtIndex:index]];
+		}
 	}
+
 }
 
 - (void)mergeData:(NSMutableArray *)outputData firstArray:(NSMutableArray *)arrayOne secondArray:(NSMutableArray *)arrayTwo {
@@ -136,50 +157,68 @@
 }
 
 - (int)numberOfRowsInTableView:(NSTableView *)pTableViewObj {
-   return [self.tableViewData count];
+
+	if (pTableViewObj == resultsTableView) {
+		
+		return [self.tableViewData count];
+		
+	} else if (pTableViewObj == translationsTableView) {
+		
+		return [self.translationsTableViewData count];
+		
+	}
 } 
 
 
-- (id) tableView:(NSTableView *)pTableViewObj 
-           objectValueForTableColumn:(NSTableColumn *)pTableColumn
-                                 row:(int)pRowIndex {
-   TableViewDataObject * dataObject = (TableViewDataObject *)
-                           [self.tableViewData objectAtIndex:pRowIndex];
-   if (! dataObject) {
-      NSLog(@"tableView: objectAtIndex:%d = NULL",pRowIndex);
-      return NULL;
-   } // end if
+- (id) tableView:(NSTableView *)pTableViewObj objectValueForTableColumn:(NSTableColumn *)pTableColumn row:(int)pRowIndex {
    
-   if ([[pTableColumn identifier] isEqualToString:@"s_example"]) {
-      return [dataObject sourceExample];
-   }
+	if (pTableViewObj == resultsTableView) {
+		TableViewDataObject *dataObject = (TableViewDataObject *)[self.tableViewData objectAtIndex:pRowIndex];
+		
+		if ([[pTableColumn identifier] isEqualToString:@"s_example"]) {
+			return [dataObject sourceExample];
+		}
    
-   if ([[pTableColumn identifier] isEqualToString:@"t_example"]) {
-      return [dataObject targetExample];
-   }
-   
-   NSLog(@"***ERROR** dropped through pTableColumn identifiers");
-   return NULL;
+		if ([[pTableColumn identifier] isEqualToString:@"t_example"]) {
+			return [dataObject targetExample];
+		}
+		
+	} else if (pTableViewObj == translationsTableView) {
+		TranslationDataObject *dataObject = (TranslationDataObject *)[self.translationsTableViewData objectAtIndex:pRowIndex];
+		
+		if ([[pTableColumn identifier] isEqualToString:@"translation"]) {
+			return [dataObject translation];
+		}
+	}
+
+	NSLog(@"error in managing identifiers");
+	return NULL;
    
 } // end tableView:objectValueForTableColumn:row:
 
 
-- (void)tableView:(NSTableView *)pTableViewObj 
-   setObjectValue:(id)pObject 
-   forTableColumn:(NSTableColumn *)pTableColumn 
-              row:(int)pRowIndex {
-              
+- (void)tableView:(NSTableView *)pTableViewObj setObjectValue:(id)pObject forTableColumn:(NSTableColumn *)pTableColumn row:(int)pRowIndex {
+
    NSLog(@"set object value impostato");
-   TableViewDataObject * dataObject = (TableViewDataObject *)
-                           [self.tableViewData objectAtIndex:pRowIndex];
-                       
-   if ([[pTableColumn identifier] isEqualToString:@"s_example"]) {
-      [dataObject setSourceExample:(NSString *)pObject];
-   }
    
-   if ([[pTableColumn identifier] isEqualToString:@"t_example"]) {
-      [dataObject setTargetExample:(NSString *)pObject];
-   }
+	if (pTableViewObj == resultsTableView) {
+		TableViewDataObject * dataObject = (TableViewDataObject *)[self.tableViewData objectAtIndex:pRowIndex];
+                       
+		if ([[pTableColumn identifier] isEqualToString:@"s_example"]) {
+			[dataObject setSourceExample:(NSString *)pObject];
+		}
+   
+		if ([[pTableColumn identifier] isEqualToString:@"t_example"]) {
+			[dataObject setTargetExample:(NSString *)pObject];
+		}
+		
+	} else if (pTableViewObj == translationsTableView) {
+		TranslationDataObject *dataObject = (TranslationDataObject *)[self.translationsTableViewData objectAtIndex:pRowIndex];
+		
+		if ([[pTableColumn identifier] isEqualToString:@"translation"]) {
+			[dataObject setTranslation:(NSString *)pObject];
+		}
+	}
    
 } // end tableView:setObjectValue:forTableColumn:row:
 
@@ -200,30 +239,56 @@
 // Parser's events
 
 - (void) parserDidStartDocument:(NSXMLParser *)parser {
-	sourceExampleArray = [[NSMutableArray alloc] init];
-	targetExampleArray = [[NSMutableArray alloc] init];
+	
+	if (service == 1) {
+		sourceExampleArray = [[NSMutableArray alloc] init];
+		targetExampleArray = [[NSMutableArray alloc] init];
+	} else if (service == 2) {
+		translations = [[NSMutableArray alloc] init];
+	}
 }
 
 - (void) parserDidEndDocument:(NSXMLParser *)parser {
-	self.tableViewData = [[NSMutableArray alloc] init];
-	NSLog(@"tabelviewdata init");
-	[self mergeData:self.tableViewData firstArray:sourceExampleArray secondArray:targetExampleArray];
-	NSLog(@"data has benn merged");
-	[[self resultsTableView] reloadData];
-	NSLog(@"tableviewrealoaddata");
+	
+	if (service == 1) {
+		self.tableViewData = [[NSMutableArray alloc] init];
+		[self mergeData:self.tableViewData firstArray:sourceExampleArray secondArray:targetExampleArray];
+		[[self resultsTableView] reloadData];
+	} else if (service == 2) {
+		self.translationsTableViewData = [[NSMutableArray alloc] init];
+		
+		int i;
+		for (i = 0; i < [translations count] - 1; i++) {
+			TranslationDataObject *dataObject = [[TranslationDataObject alloc] initWithTranslations:[translations objectAtIndex:i]];
+			[self.translationsTableViewData addObject:dataObject];
+		}
+		[[self translationsTableView] reloadData];
+		NSLog(@"reloading data for translations");
+	}
 	
 	[spinner stopAnimation:self];
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
 	NSLog(@"didendelement");
-	if ([@"source_example" isEqualToString:elementName]) {
-		source_example = [elementValue copy];
-	} else if ([@"target_example" isEqualToString:elementName]) {
-		target_example = [elementValue copy];
-	} if ([@"Sample" isEqualToString:elementName]) {
-		[sourceExampleArray addObject:source_example];
-		[targetExampleArray addObject:target_example];
+	
+	if (service == 1) {
+		if ([@"source_example" isEqualToString:elementName]) {
+			source_example = [elementValue copy];
+		} else if ([@"target_example" isEqualToString:elementName]) {
+			target_example = [elementValue copy];
+		} if ([@"Sample" isEqualToString:elementName]) {
+			[sourceExampleArray addObject:source_example];
+			[targetExampleArray addObject:target_example];
+		}
+	} else if (service == 2) {
+		if ([@"translation" isEqualToString:elementName]) {
+			translation = [elementValue copy];
+		}
+		
+		if ([@"Translation" isEqualToString:elementName]) {
+			[translations addObject:translation];
+		}
 	}
 }
 
@@ -275,15 +340,17 @@
 
 // Intrafce Builder's actions
 
-- (IBAction)tabChanged:(id)sender {
-	int tabSelection;
+- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)item {
+
+	if ([drawer state] == NSDrawerOpenState) {
+		[drawer close];
+	}
 	
-	tabSelection = [tabView indexOfTabViewItem:[tabView selectedTabViewItem]];
-	
-	if (tabSelection == 1) {
-		self.service = @"context";
-	} else if (tabSelection == 2) {
-		self.service = @"translation";
+	NSLog(@"assigned at %@", item.identifier);
+	if ([item.identifier isEqualTo:@"1"]) {
+		self.service = 1;
+	} else if ([item.identifier isEqualTo:@"2"]) {
+		self.service = 2;
 	}
 }
 
@@ -296,9 +363,17 @@
 	NSString *serverAddress = [[NSUserDefaults standardUserDefaults] stringForKey:@"serverAddress"];
 	NSString *serverPort = [[NSUserDefaults standardUserDefaults] stringForKey:@"serverPort"];
 	
-	//NSLog(@"%@ %@ %@", inputText, sourceLanguageId, targetLanguageId);
+	NSString *service_str = [[NSString alloc] init];
 	
-	NSString *componentsPath = [NSString stringWithFormat:@"http://%@:%@/?service=%@&text=%@&inputlang=%@&outputlang=%@&number=10", serverAddress, serverPort, [self service], inputText, sourceLanguageId, targetLanguageId];
+	if ([self service] == 1) {
+		service_str = @"context";
+		NSLog(@"%@", service_str);
+	} else if ([self service] == 2) {
+		service_str = @"translation";
+		NSLog(@"%@", service_str);
+	}
+	
+	NSString *componentsPath = [NSString stringWithFormat:@"http://%@:%@/?service=%@&text=%@&inputlang=%@&outputlang=%@&number=10", serverAddress, serverPort, service_str, inputText, sourceLanguageId, targetLanguageId];
 	componentsPath = [componentsPath stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 	NSLog(@"%@", componentsPath);
 	NSURL *url = [NSURL URLWithString:componentsPath];
@@ -311,7 +386,21 @@
 
 - (IBAction)search:(id)pId {
 	if (![[searchField stringValue] isEqualToString:@""]) {
+		if ([drawer state] == NSDrawerOpenState) {
+			[drawer close];
+		}
 		[self find];
+	}
+}
+
+- (IBAction)saveToPasteboard:(id)sender {
+	NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+	[pasteboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+	
+	if ([self service] == 1) {
+		[pasteboard setString:[targetExampleArray objectAtIndex:[resultsTableView selectedRow]] forType:NSStringPboardType];
+	} else if ([self service] == 2) {
+		[pasteboard setString:[translations objectAtIndex:[translationsTableView selectedRow]] forType:NSStringPboardType];
 	}
 }
 

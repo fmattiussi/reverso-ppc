@@ -16,6 +16,7 @@
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		BC7DAA83266F655A008F7AAF /* DetailDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7DAA82266F655A008F7AAF /* DetailDrawer.m */; };
 		BC8054ED2667863F00D26FD4 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = BC8054EC2667863F00D26FD4 /* Preferences.nib */; };
+		BC87B87B2673A85B007AF0E5 /* TranslationDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC87B87A2673A85B007AF0E5 /* TranslationDataObject.m */; };
 		BC8B07C1265ABB4900B15945 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8B07C0265ABB4900B15945 /* PreferencesController.m */; };
 		BC8C33DF26628955001B0246 /* FavoritesController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8C33DE26628955001B0246 /* FavoritesController.m */; };
 		BC911CEB2658C6D100D96898 /* TableViewDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC911CEA2658C6D100D96898 /* TableViewDataObject.m */; };
@@ -39,6 +40,8 @@
 		BC7DAA81266F655A008F7AAF /* DetailDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailDrawer.h; sourceTree = "<group>"; };
 		BC7DAA82266F655A008F7AAF /* DetailDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailDrawer.m; sourceTree = "<group>"; };
 		BC8054EC2667863F00D26FD4 /* Preferences.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Preferences.nib; sourceTree = "<group>"; };
+		BC87B8792673A85B007AF0E5 /* TranslationDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranslationDataObject.h; sourceTree = "<group>"; };
+		BC87B87A2673A85B007AF0E5 /* TranslationDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranslationDataObject.m; sourceTree = "<group>"; };
 		BC8B07BF265ABB4900B15945 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		BC8B07C0265ABB4900B15945 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		BC8C33DD26628955001B0246 /* FavoritesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesController.h; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				BC911CEA2658C6D100D96898 /* TableViewDataObject.m */,
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
+				BC87B8792673A85B007AF0E5 /* TranslationDataObject.h */,
+				BC87B87A2673A85B007AF0E5 /* TranslationDataObject.m */,
 				BC8B07BF265ABB4900B15945 /* PreferencesController.h */,
 				BC8B07C0265ABB4900B15945 /* PreferencesController.m */,
 			);
@@ -209,6 +214,7 @@
 				BC8B07C1265ABB4900B15945 /* PreferencesController.m in Sources */,
 				BC8C33DF26628955001B0246 /* FavoritesController.m in Sources */,
 				BC7DAA83266F655A008F7AAF /* DetailDrawer.m in Sources */,
+				BC87B87B2673A85B007AF0E5 /* TranslationDataObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
