@@ -5,6 +5,26 @@ import itertools
 import pyconvert.pyconv
 from werkzeug.exceptions import HTTPException
 
+# history objects
+
+class History(object):
+	translations = []
+	source_lang = ""
+	source_text = ""
+	target_lang = ""
+	
+	def __init__(self, translations, source_lang, source_text, target_lang):
+		self.translations = translations
+		self.source_lang = source_lang
+		self.source_text = source_text
+		self.target_lang = target_lang
+
+class HistoryResponse(object):
+	histories = [History]
+	
+	def __init__(self, histories):
+		self.histories = histories
+
 # favorites object
 
 class Favorite(object):
@@ -143,12 +163,24 @@ def getFavorites(inputlang, outputlang, credentials, number):
 	
 	favorites = []
 	for favorite in itertools.islice(client.get_favorites(), number):
-		favorites.append(Favorite(favorite[0], favorite[1], favorite[2], favorite[3], favorite[4], favorite[5]))
+		favorites.append(Favorite(favorite["source_lang"], favorite["source_text"], favorite["source_context"], favorite["target_lang"], favorite["target_text"], favorite["target_context"]))
 
 	response = FavoritesResponse(favorites)
 	json_favorites = pyconvert.pyconv.convert2XML(response)
 	print(json_favorites.toprettyxml())
 	return json_favorites.toprettyxml()
+
+def getHistory(inputlang, outputlang, credentials, number):
+	client = Client(inputlang, outputlang, credentials=(credentials.email, credentials.password))
+	
+	histories = []
+	for history in itertools.islice(client.get_history(), number):
+		histories.append(History(history["translations"], history["source_lang"], history["source_text"], history["target_lang"]))
+		
+	response = HistoryResponse(histories)
+	xml_history = pyconvert.pyconv.convert2XML(response)
+	print(xml_history.toprettyxml())
+	return xml_history.toprettyxml()
 
 @app.route("/")
 def homepage():
@@ -173,6 +205,8 @@ def homepage():
 		return getSearchSuggestions(text, inputlang, outputlang, number)
 	elif service == "favorites":
 		return getFavorites(inputlang, outputlang, credentials, number)
+	elif service == "history":
+		return getHistory(inputlang, outputlang, credentials, number)
 	else:
 		return "wrong or unspecified service"
 
