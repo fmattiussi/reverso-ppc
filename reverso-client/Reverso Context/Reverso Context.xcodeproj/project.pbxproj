@@ -17,6 +17,9 @@
 		BC7DAA83266F655A008F7AAF /* DetailDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7DAA82266F655A008F7AAF /* DetailDrawer.m */; };
 		BC8054ED2667863F00D26FD4 /* Preferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = BC8054EC2667863F00D26FD4 /* Preferences.nib */; };
 		BC87B87B2673A85B007AF0E5 /* TranslationDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC87B87A2673A85B007AF0E5 /* TranslationDataObject.m */; };
+		BC88BDA42679FD5B00E9464E /* UserController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC88BDA32679FD5B00E9464E /* UserController.m */; };
+		BC88BDA9267A017500E9464E /* HistoryDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC88BDA8267A017500E9464E /* HistoryDataObject.m */; };
+		BC88BDAC267A018200E9464E /* FavoriteDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC88BDAB267A018200E9464E /* FavoriteDataObject.m */; };
 		BC8B07C1265ABB4900B15945 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8B07C0265ABB4900B15945 /* PreferencesController.m */; };
 		BC8C33DF26628955001B0246 /* FavoritesController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8C33DE26628955001B0246 /* FavoritesController.m */; };
 		BC911CEB2658C6D100D96898 /* TableViewDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC911CEA2658C6D100D96898 /* TableViewDataObject.m */; };
@@ -42,6 +45,12 @@
 		BC8054EC2667863F00D26FD4 /* Preferences.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Preferences.nib; sourceTree = "<group>"; };
 		BC87B8792673A85B007AF0E5 /* TranslationDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranslationDataObject.h; sourceTree = "<group>"; };
 		BC87B87A2673A85B007AF0E5 /* TranslationDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranslationDataObject.m; sourceTree = "<group>"; };
+		BC88BDA22679FD5B00E9464E /* UserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserController.h; sourceTree = "<group>"; };
+		BC88BDA32679FD5B00E9464E /* UserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserController.m; sourceTree = "<group>"; };
+		BC88BDA7267A017500E9464E /* HistoryDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryDataObject.h; sourceTree = "<group>"; };
+		BC88BDA8267A017500E9464E /* HistoryDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryDataObject.m; sourceTree = "<group>"; };
+		BC88BDAA267A018200E9464E /* FavoriteDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteDataObject.h; sourceTree = "<group>"; };
+		BC88BDAB267A018200E9464E /* FavoriteDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteDataObject.m; sourceTree = "<group>"; };
 		BC8B07BF265ABB4900B15945 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		BC8B07C0265ABB4900B15945 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		BC8C33DD26628955001B0246 /* FavoritesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesController.h; sourceTree = "<group>"; };
@@ -103,17 +112,16 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BC88BDA6267A014C00E9464E /* Data Objects */,
 				BC8C33DD26628955001B0246 /* FavoritesController.h */,
 				BC7DAA81266F655A008F7AAF /* DetailDrawer.h */,
 				BC7DAA82266F655A008F7AAF /* DetailDrawer.m */,
 				BC8C33DE26628955001B0246 /* FavoritesController.m */,
-				BC911CE92658C6D100D96898 /* TableViewDataObject.h */,
-				BC911CEA2658C6D100D96898 /* TableViewDataObject.m */,
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
-				BC87B8792673A85B007AF0E5 /* TranslationDataObject.h */,
-				BC87B87A2673A85B007AF0E5 /* TranslationDataObject.m */,
 				BC8B07BF265ABB4900B15945 /* PreferencesController.h */,
+				BC88BDA22679FD5B00E9464E /* UserController.h */,
+				BC88BDA32679FD5B00E9464E /* UserController.m */,
 				BC8B07C0265ABB4900B15945 /* PreferencesController.m */,
 			);
 			name = Classes;
@@ -148,6 +156,21 @@
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BC88BDA6267A014C00E9464E /* Data Objects */ = {
+			isa = PBXGroup;
+			children = (
+				BC88BDAA267A018200E9464E /* FavoriteDataObject.h */,
+				BC88BDAB267A018200E9464E /* FavoriteDataObject.m */,
+				BC911CE92658C6D100D96898 /* TableViewDataObject.h */,
+				BC911CEA2658C6D100D96898 /* TableViewDataObject.m */,
+				BC87B8792673A85B007AF0E5 /* TranslationDataObject.h */,
+				BC87B87A2673A85B007AF0E5 /* TranslationDataObject.m */,
+				BC88BDA7267A017500E9464E /* HistoryDataObject.h */,
+				BC88BDA8267A017500E9464E /* HistoryDataObject.m */,
+			);
+			name = "Data Objects";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +238,9 @@
 				BC8C33DF26628955001B0246 /* FavoritesController.m in Sources */,
 				BC7DAA83266F655A008F7AAF /* DetailDrawer.m in Sources */,
 				BC87B87B2673A85B007AF0E5 /* TranslationDataObject.m in Sources */,
+				BC88BDA42679FD5B00E9464E /* UserController.m in Sources */,
+				BC88BDA9267A017500E9464E /* HistoryDataObject.m in Sources */,
+				BC88BDAC267A018200E9464E /* FavoriteDataObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,15 +11,14 @@
 
 @implementation TableViewDataObject
 
-@synthesize sourceExample;
-@synthesize targetExample;
+@synthesize sourceExample, targetExample;
 
 - (id)initWithExamples:(NSString *)s_Example target:(NSString *)t_Example {
 
    if (! (self = [super init])) {
          NSLog(@"MyDataObject **** ERROR : [super init] failed ***");
          return self;
-      } // end if
+      } 
    
    self.sourceExample = s_Example;
    self.targetExample = t_Example;
