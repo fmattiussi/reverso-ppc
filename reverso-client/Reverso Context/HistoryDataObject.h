@@ -21,6 +21,8 @@
 @property (copy) NSString *sourceText;
 @property (copy) NSString *targetLanguage;
 
-- (id)initWithHistory:(NSMutableArray *)translations sourceLanguage:(NSString *)sourceLanguage sourceText:(NSString *)sourceText targetLanguage:(NSString *)targetLanguage;
+- (id)initWithHistory:(NSString *)targetLanguage;
+
+//- (id)initWithHistory:(NSMutableArray *)translations sourceLanguage:(NSString *)sourceLanguage sourceText:(NSString *)sourceText targetLanguage:(NSString *)targetLanguage;
 
 @end

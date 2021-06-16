@@ -27,6 +27,7 @@
 @property (copy) NSString *targetLanguage;
 @property (copy) NSString *targetContext;
 
-- (id)initWithFavorites:(NSString *)sourceText sourceLanguage:(NSString *)sourceLanguage sourceContext:(NSString *)sourceContext targetText:(NSString *)targetText targetLanguage:(NSString *)targetLanguage targetContext:(NSString *)targetContext;
+- (id)initWithFavorites:(NSString *)targetContext;
+//- (id)initWithFavorites:(NSString *)sourceText sourceLanguage:(NSString *)sourceLanguage sourceContext:(NSString *)sourceContext targetText:(NSString *)targetText targetLanguage:(NSString *)targetLanguage targetContext:(NSString *)targetContext;
 
 @end

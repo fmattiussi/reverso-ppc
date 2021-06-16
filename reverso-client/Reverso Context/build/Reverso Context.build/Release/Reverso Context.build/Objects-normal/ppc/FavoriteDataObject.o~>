@@ -1,0 +1,2 @@
+/Users/francescomattiussi/reverso-ppc/reverso-client/Reverso Context/FavoriteDataObject.m:48: warning: incomplete implementation of class 'FavoriteDataObject'
+/Users/francescomattiussi/reverso-ppc/reverso-client/Reverso Context/FavoriteDataObject.m:48: warning: method definition for '-initWithFavorites:sourceLanguage:sourceContext:targetText:targetLanguage:targetContext:' not found

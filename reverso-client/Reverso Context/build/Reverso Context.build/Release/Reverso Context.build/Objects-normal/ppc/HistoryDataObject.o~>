@@ -1,0 +1,2 @@
+/Users/francescomattiussi/reverso-ppc/reverso-client/Reverso Context/HistoryDataObject.m:45: warning: incomplete implementation of class 'HistoryDataObject'
+/Users/francescomattiussi/reverso-ppc/reverso-client/Reverso Context/HistoryDataObject.m:45: warning: method definition for '-initWithHistory:sourceLanguage:sourceText:targetLanguage:' not found
