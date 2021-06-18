@@ -268,6 +268,9 @@
 	NSString *serverAddress = [[NSUserDefaults standardUserDefaults] stringForKey:@"serverAddress"];
 	NSString *serverPort = [[NSUserDefaults standardUserDefaults] stringForKey:@"serverPort"];
 	
+	NSString *accountUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"accountUsername"];
+	NSString *accountPassword = [[NSUserDefaults standardUserDefaults] stringForKey:@"accountPassword"];
+	
 	NSString *service_str = [[NSString alloc] init];
 	
 	if ([self service] == 1) {
@@ -278,7 +281,7 @@
 		NSLog(@"%@", service_str);
 	}
 	
-	NSString *componentsPath = [NSString stringWithFormat:@"http://%@:%@/?service=%@&inputlang=%@&outputlang=%@&number=10&email=%@&password=%@", serverAddress, serverPort, service_str, @"fr", @"it", @"f.mattiussi2004@gmail.com", @"Francesco10"];
+	NSString *componentsPath = [NSString stringWithFormat:@"http://%@:%@/?service=%@&inputlang=%@&outputlang=%@&number=10&email=%@&password=%@", serverAddress, serverPort, service_str, @"fr", @"it", accountUsername, accountPassword];
 	
 	componentsPath = [componentsPath stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
 	NSLog(@"%@", componentsPath);

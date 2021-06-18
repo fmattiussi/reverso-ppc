@@ -25,6 +25,9 @@
 	IBOutlet NSTextField *serverPassword;
 	
 	IBOutlet NSButton *authRadio;
+	
+	// Account View
+	
 	IBOutlet NSTextField *accountUsername;
 	IBOutlet NSTextField *accountPassword;
 }
