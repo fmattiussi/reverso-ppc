@@ -18,15 +18,14 @@
 
 @synthesize service, sourceLanguageId, targetLanguageId;
 
-@synthesize switchTabView;
+@synthesize switchTabView, userWindow;
 
 - (id)init
 {
     self = [super init];
     if (self) {
-    
-        // Add your subclass-specific initialization here.
-        // If an error occurs here, send a [self release] message and return nil.
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSource:) name:@"updateSource" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTarget:) name:@"updateTarget" object:nil];
     
     }
     return self;
@@ -71,6 +70,30 @@
 	
 	sourceLanguageId = [self locale:[sourceLanguage indexOfSelectedItem]];
 	targetLanguageId = [self locale:[targetLanguage indexOfSelectedItem]];
+}
+
+- (void)updateSource:(NSNotification *)notification {
+	if ([useDefaultLanguage state] == YES) {
+		NSString *currentSource = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentSource"];
+		[sourceLanguage selectItemWithTitle:currentSource];
+	}
+}
+
+- (void)updateTarget:(NSNotification *)notification {
+	if ([useDefaultLanguage state] == YES) {
+		NSString *currentTarget = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentTarget"];
+		[targetLanguage selectItemWithTitle:currentTarget];
+	}
+}
+
+- (void)toggleDefaultLanguage:(id)sender {
+	if([sender state] == YES) {
+		NSString *currentSource = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentSource"];
+		[sourceLanguage selectItemWithTitle:currentSource];
+		
+		NSString *currentTarget = [[NSUserDefaults standardUserDefaults] stringForKey:@"currentTarget"];
+		[targetLanguage selectItemWithTitle:currentTarget];
+	}
 }
 
 // TableView's delegates and functions
@@ -298,8 +321,10 @@
 	
 	NSLog(@"assigned at %@", item.identifier);
 	if ([item.identifier isEqualTo:@"1"]) {
+		[userWindow setTitle:@"Favorites"];
 		self.service = 1;
 	} else if ([item.identifier isEqualTo:@"2"]) {
+		[userWindow setTitle:@"History"];
 		self.service = 2;
 	}
 	

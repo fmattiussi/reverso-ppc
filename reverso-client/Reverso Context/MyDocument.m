@@ -226,12 +226,18 @@
 - (IBAction)sourceLanguageSelected:(id)sender {
 
 	sourceLanguageId = [self locale:[sender indexOfSelectedItem]];
+	
+	[[NSUserDefaults standardUserDefaults] setObject:[sender titleOfSelectedItem] forKey:@"currentSource"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateSource" object:self];
 	NSLog(@"%@", sourceLanguageId);
 }
 
 - (IBAction)targetLanguageSelected:(id)sender {
 
 	targetLanguageId = [self locale:[sender indexOfSelectedItem]];
+	
+	[[NSUserDefaults standardUserDefaults] setObject:[sender titleOfSelectedItem] forKey:@"currentTarget"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"updateTarget" object:self];
 	NSLog(@"%@", targetLanguageId);
 	
 }

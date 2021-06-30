@@ -12,6 +12,8 @@
 
 @interface UserController : NSWindowController {
 
+	IBOutlet NSWindow *userWindow;
+
 	// TableViews
 	IBOutlet NSTableView *favoritesTableView;
 	IBOutlet NSTableView *historyTableView;
@@ -51,6 +53,8 @@
 	NSString *history;
 }
 
+@property (assign) IBOutlet NSWindow *userWindow;
+
 @property (assign) IBOutlet NSTableView *favoritesTableView;
 @property (assign) IBOutlet NSTableView *historyTableView;
 
@@ -80,10 +84,16 @@
 @property (assign) IBOutlet NSMutableArray *favoritesTableViewData;
 @property (assign) IBOutlet NSMutableArray *historyTableViewData;
 
+// Buttons
+
+- (void)toggleDefaultLanguage:(id)sender;
+
 // Utility Functions
 
 - (void)loadPanel;
 - (NSString *)locale:(int)index;
+- (void)updateSource:(NSNotification *)notification;
+- (void)updateTarget:(NSNotification *)notification;
 
 - (void)buildHistory:(NSMutableArray *)tableViewData array:(NSMutableArray *)baseArray;
 - (void)buildFavorites:(NSMutableArray *)tableViewData array:(NSMutableArray *)baseArray;
